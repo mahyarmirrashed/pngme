@@ -1,11 +1,34 @@
 use std::{fmt::Display, str::FromStr};
 
+#[derive(Eq, PartialEq)]
 pub struct ChunkType {
     bytes: [u8; 4],
 }
 
 impl ChunkType {
-    //
+    fn bytes(&self) -> [u8; 4] {
+        //
+    }
+
+    fn is_valid(&self) -> bool {
+        //
+    }
+
+    fn is_critical(&self) -> bool {
+        //
+    }
+
+    fn is_public(&self) -> bool {
+        //
+    }
+
+    fn is_reserved_bit_valid(&self) -> bool {
+        //
+    }
+
+    fn is_safe_to_copy(&self) -> bool {
+        //
+    }
 }
 
 impl TryFrom<[u8; 4]> for ChunkType {
