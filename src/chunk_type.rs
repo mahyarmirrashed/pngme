@@ -1,1 +1,3 @@
-pub mod chunk_type {}
+pub struct ChunkType {
+    bytes: [u8; 4],
+}
