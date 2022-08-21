@@ -25,6 +25,21 @@ impl ChunkType {
         //
     }
 
+    /// Section 3.2 of the PNG specification explains that type codes are
+    /// restricted to consisting only of uppercase and lowercase ASCII
+    /// characters. However, encoders/decoders should treat these codes as fixed
+    /// binary values rather than character strings.
+    ///
+    /// For convenience, the conversions between characters and binary values of
+    /// the allowable range of type code values are listed below:
+    /// - 'A' => 65
+    /// - 'Z' => 90
+    /// - 'a' => 97
+    /// - 'z' => 122
+    const fn is_valid_byte(byte: u8) -> bool {
+        (65 <= byte && byte <= 90) || (97 <= byte && byte <= 122)
+    }
+
     fn is_critical(&self) -> bool {
         //
     }
