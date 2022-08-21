@@ -58,8 +58,24 @@ impl ChunkType {
 }
 
 impl TryFrom<[u8; 4]> for ChunkType {
-    //
+    type Error = crate::Error;
+
+    fn try_from(bytes: [u8; 4]) -> Result<Self, Self::Error> {
+        for byte in bytes.iter() {
+            if !Self::is_valid_byte(byte) {
+                return Err(Box::new(ChunkTypeDecodingError::BadByte(byte)));
+            }
+        }
+
+        Ok(ChunkType { bytes })
+    }
 }
+
+pub enum ChunkTypeDecodingError {
+    BadByte(u8),
+}
+
+impl Error for ChunkTypeDecodingError {}
 
 impl FromStr for ChunkType {
     //
