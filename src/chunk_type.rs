@@ -5,11 +5,11 @@ use std::str::FromStr;
 
 /// A 4-byte PNG chunk type code.
 ///
-/// Section 3.2 of the [PNG specification](http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html)
+/// The [PNG specification](http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html)
 /// explains the concept in further detail.
 ///
-/// Type codes are restricted to uppercase and lowercase ASCII characters. All other codes
-/// are considered invalid.
+/// Type codes are restricted to uppercase and lowercase ASCII characters. All
+/// other codes are considered invalid.
 #[derive(Eq, PartialEq)]
 pub struct ChunkType {
     bytes: [u8; 4],
