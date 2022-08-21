@@ -73,6 +73,14 @@ pub enum ChunkTypeDecodingError {
     BadByte(u8),
 }
 
+impl fmt::Display for ChunkTypeDecodingError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::BadByte(byte) => write!(f, "Bad byte: {byte} ({byte:b})"),
+        }
+    }
+}
+
 impl Error for ChunkTypeDecodingError {}
 
 impl FromStr for ChunkType {
