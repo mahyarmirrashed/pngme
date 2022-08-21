@@ -1,4 +1,7 @@
-use std::{fmt::Display, str::FromStr};
+use std::convert::{From, TryFrom};
+use std::error::Error;
+use std::fmt;
+use std::str::FromStr;
 
 /// A 4-byte PNG chunk type code.
 ///
@@ -47,7 +50,7 @@ impl FromStr for ChunkType {
     //
 }
 
-impl Display for ChunkType {
+impl fmt::Display for ChunkType {
     //
 }
 
