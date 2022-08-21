@@ -59,8 +59,8 @@ impl TryFrom<[u8; 4]> for ChunkType {
 
     fn try_from(bytes: [u8; 4]) -> Result<Self, Self::Error> {
         for byte in bytes.iter() {
-            if !Self::is_valid_byte(byte) {
-                return Err(Box::new(ChunkTypeDecodingError::BadByte(byte)));
+            if !Self::is_valid_byte(*byte) {
+                return Err(Box::new(ChunkTypeDecodingError::BadByte(*byte)));
             }
         }
 
