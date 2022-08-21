@@ -10,7 +10,7 @@ use std::str::FromStr;
 ///
 /// Type codes are restricted to uppercase and lowercase ASCII characters. All
 /// other codes are considered invalid.
-#[derive(Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct ChunkType {
     bytes: [u8; 4],
 }
