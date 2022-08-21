@@ -30,14 +30,11 @@ impl ChunkType {
     /// characters. However, encoders/decoders should treat these codes as fixed
     /// binary values rather than character strings.
     ///
-    /// For convenience, the conversions between characters and binary values of
-    /// the allowable range of type code values are listed below:
-    /// - 'A' => 65
-    /// - 'Z' => 90
-    /// - 'a' => 97
-    /// - 'z' => 122
+    /// Fortunately, the Rust programming languages already makes these
+    /// functions available through u8::is_ascii_lowercase and
+    /// u8::is_ascii_uppercase.
     const fn is_valid_byte(byte: u8) -> bool {
-        (65 <= byte && byte <= 90) || (97 <= byte && byte <= 122)
+        byte.is_ascii_uppercase() || byte.is_ascii_lowercase()
     }
 
     fn is_critical(&self) -> bool {
