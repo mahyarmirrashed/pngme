@@ -68,8 +68,12 @@ impl TryFrom<[u8; 4]> for ChunkType {
     }
 }
 
+/// ChunkTypeDecodingError is used while decoding a PNG chunk and an unexpected
+/// scenario arises.
 #[derive(Debug)]
 pub enum ChunkTypeDecodingError {
+    /// During decoding, an invalid byte was encountered. The byte encapsulated
+    /// is the first bad byte encountered.
     BadByte(u8),
 }
 
