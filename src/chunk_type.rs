@@ -114,7 +114,16 @@ impl FromStr for ChunkType {
 }
 
 impl fmt::Display for ChunkType {
-    //
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let res = match std::str::from_utf8(&self.bytes) {
+            Ok(res) => res,
+            Err(e) => panic!("Invalid byte sequence: {}", e),
+        };
+
+        write!(f, "{}", res);
+
+        Ok(())
+    }
 }
 
 #[cfg(test)]
