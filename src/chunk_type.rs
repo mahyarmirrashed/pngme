@@ -75,12 +75,16 @@ pub enum ChunkTypeDecodingError {
     /// During decoding, an invalid byte was encountered. The byte encapsulated
     /// is the first bad byte encountered.
     BadByte(u8),
+    /// When attempting to cast from String to a ChunkType, there is a
+    /// possibility that the provided string may not be four bytes long.
+    BadLength(usize),
 }
 
 impl fmt::Display for ChunkTypeDecodingError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::BadByte(byte) => write!(f, "Bad byte: {byte} ({byte:b})"),
+            Self::BadLength(length) => write!(f, "Bad length: {length} (expected 4)"),
         }
     }
 }
@@ -88,7 +92,25 @@ impl fmt::Display for ChunkTypeDecodingError {
 impl Error for ChunkTypeDecodingError {}
 
 impl FromStr for ChunkType {
-    //
+    type Err = crate::Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s.len() != 4 {
+            return Err(Box::new(ChunkTypeDecodingError::BadLength(s.len())));
+        }
+
+        let mut bytes = [0u8; 4];
+
+        for (index, byte) in s.as_bytes().iter().enumerate() {
+            if Self::is_valid_byte(*byte) {
+                bytes[index] = *byte;
+            } else {
+                return Err(Box::new(ChunkTypeDecodingError::BadByte(*byte)));
+            }
+        }
+
+        Ok(ChunkType { bytes })
+    }
 }
 
 impl fmt::Display for ChunkType {
