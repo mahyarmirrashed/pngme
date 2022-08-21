@@ -68,6 +68,7 @@ impl TryFrom<[u8; 4]> for ChunkType {
     }
 }
 
+#[derive(Debug)]
 pub enum ChunkTypeDecodingError {
     BadByte(u8),
 }
