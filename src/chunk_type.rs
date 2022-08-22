@@ -17,7 +17,7 @@ pub struct ChunkType {
 
 impl ChunkType {
     /// Array slice reference to bytes underlying ChunkType.
-    fn bytes(&self) -> [u8; 4] {
+    pub fn bytes(&self) -> [u8; 4] {
         self.bytes
     }
 
