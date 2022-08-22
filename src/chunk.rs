@@ -33,7 +33,10 @@ impl Chunk {
         //
     }
 
-    /// The number of bytes in chunk's data field.
+    /// The number of bytes in chunk's data field. This is *not* the total
+    /// number of bytes in the Chunk; it is the number of bytes in
+    /// `chunk.data()`. To get the total number of bytes in the chunk, call
+    /// `chunk.as_bytes().len()`.
     fn length(&self) -> u32 {
         self.length
     }
