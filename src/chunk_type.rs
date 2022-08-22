@@ -141,7 +141,7 @@ impl fmt::Display for ChunkType {
             Err(e) => panic!("Invalid byte sequence: {}", e),
         };
 
-        write!(f, "{}", res);
+        write!(f, "{}", res)?;
 
         Ok(())
     }
