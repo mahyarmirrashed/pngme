@@ -4,6 +4,7 @@ use std::fmt;
 
 use crate::chunk_type::ChunkType;
 
+#[derive(Debug)]
 pub struct Chunk {
     length: u32,
     chunk_type: ChunkType,
