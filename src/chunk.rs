@@ -38,8 +38,9 @@ impl Chunk {
         self.length
     }
 
+    /// Chunk type.
     fn chunk_type(&self) -> &ChunkType {
-        //
+        &self.chunk_type
     }
 
     fn data(&self) -> &[u8] {
