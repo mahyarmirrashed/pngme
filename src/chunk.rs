@@ -4,11 +4,27 @@ use std::fmt;
 
 use crate::chunk_type::ChunkType;
 
+/// Each PNG chunk contains four parts: length, chunk type, chunk data, and a
+/// CRC (Cyclic Redundancy Check).
 #[derive(Debug)]
 pub struct Chunk {
+    /// A 4-byte unsigned integer indicating the number of bytes in the chunk's
+    /// data field. This length *only* counts bytes within the data field. It
+    /// does not include the number of bytes used for representing itself, the
+    /// chunk type code, or the CRC. For that reason, zero is a valid value for
+    /// this field.
     length: u32,
+
+    /// A 4-byte chunk type code represented through the ChunkType structure.
     chunk_type: ChunkType,
+
+    /// The data bytes appropriate to the chunk type, if any.
     chunk_data: Vec<u8>,
+
+    /// A 4-byte CRC (Cyclic Redundancy Check) calculated on the preceding bytes
+    /// in the chunk, including the chunk type code and chunk data fields, but
+    /// *not* including the length field. More information about the [CRC
+    /// algorithm](http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html#CRC-algorithm).
     crc: u32,
 }
 
