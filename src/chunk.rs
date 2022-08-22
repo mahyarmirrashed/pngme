@@ -63,8 +63,10 @@ impl Chunk {
         self.crc
     }
 
+    /// Represent the embedded data within the chunk as a UTF-8 string. If an
+    /// error occurs, wrap the error response in a Box object.
     fn data_as_string(&self) -> crate::Result<String> {
-        //
+        Ok(String::from_utf8(self.chunk_data.clone()).map_err(Box::new)?)
     }
 
     /// Every byte within chunk.
