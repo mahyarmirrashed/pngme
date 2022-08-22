@@ -29,8 +29,15 @@ pub struct Chunk {
 }
 
 impl Chunk {
-    fn new(chunk_type: ChunkType, data: Vec<u8>) -> Chunk {
-        //
+    /// Create a chunk from a ChunkType and chunk data.
+    fn new(chunk_type: ChunkType, chunk_data: Vec<u8>) -> Chunk {
+        Chunk {
+            length: chunk_data.len() as u32,
+            chunk_type,
+            chunk_data,
+            crc: crc::Crc::<u32>::new(&crc::CRC_32_CKSUM)
+                .checksum(&[&chunk_type.bytes(), chunk_data.as_slice()].concat()),
+        }
     }
 
     /// The number of bytes in chunk's data field. This is *not* the total
