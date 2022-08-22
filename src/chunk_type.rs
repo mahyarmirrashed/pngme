@@ -59,8 +59,12 @@ impl ChunkType {
         Self::is_indicator_zero(self.bytes[2], 5)
     }
 
+    /// Safe PNG chunks do not depend on image data. If changes are made to any
+    /// critical chunks, including addition, modification, deletion, or
+    /// reordering of critical chunks, then unrecognized unsafe chunks should
+    /// not be copied to the output PNG file.
     fn is_safe_to_copy(&self) -> bool {
-        //
+        !Self::is_indicator_zero(self.bytes[3], 5)
     }
 
     /// Checks whether the nth bit on the right of the binary representation of
