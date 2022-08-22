@@ -37,8 +37,11 @@ impl ChunkType {
         byte.is_ascii_uppercase() || byte.is_ascii_lowercase()
     }
 
+    /// Chunks that are necessary for the successful display of the file's
+    /// contents are called "critical" chunks. Critical chunks are indicated by
+    /// bit 5 of the first byte being high.
     fn is_critical(&self) -> bool {
-        //
+        Self::is_indicator_zero(self.bytes[0], 5)
     }
 
     fn is_public(&self) -> bool {
