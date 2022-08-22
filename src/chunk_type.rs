@@ -124,8 +124,8 @@ impl fmt::Display for ChunkType {
     }
 }
 
-/// ChunkTypeDecodingError is used while decoding a PNG chunk and an unexpected
-/// scenario arises.
+/// ChunkTypeDecodingError is used while decoding a PNG chunk type and an
+/// unexpected scenario arises.
 #[derive(Debug)]
 pub enum ChunkTypeDecodingError {
     /// During decoding, an invalid byte was encountered. The byte encapsulated
