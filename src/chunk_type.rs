@@ -1,4 +1,4 @@
-use std::convert::{From, TryFrom};
+use std::convert::TryFrom;
 use std::error::Error;
 use std::fmt;
 use std::str::FromStr;
