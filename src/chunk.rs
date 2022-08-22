@@ -33,8 +33,9 @@ impl Chunk {
         //
     }
 
+    /// Number of bytes in chunk's data field.
     fn length(&self) -> u32 {
-        //
+        self.length
     }
 
     fn chunk_type(&self) -> &ChunkType {
