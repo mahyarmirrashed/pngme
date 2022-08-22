@@ -21,8 +21,9 @@ impl ChunkType {
         self.bytes
     }
 
+    /// Validity only depends on whether reserved bit is valid.
     fn is_valid(&self) -> bool {
-        //
+        self.is_reserved_bit_valid()
     }
 
     /// Section 3.2 of the PNG specification explains that type codes are
