@@ -44,8 +44,12 @@ impl ChunkType {
         Self::is_indicator_zero(self.bytes[0], 5)
     }
 
+    /// Chunks that are public are those that are part of the PNG specification
+    /// or are registered in the list of PNG special-purpose public chunk types.
+    /// Non-public/private chunks can be defined and used for their own
+    /// purposes.
     fn is_public(&self) -> bool {
-        //
+        Self::is_indicator_zero(self.bytes[1], 5)
     }
 
     fn is_reserved_bit_valid(&self) -> bool {
