@@ -52,8 +52,11 @@ impl ChunkType {
         Self::is_indicator_zero(self.bytes[1], 5)
     }
 
+    /// In order for the PNG image to conform to the 2022 version of PNG, this
+    /// bit must be zero. This bit is reserved for future expansion of the
+    /// specification.
     fn is_reserved_bit_valid(&self) -> bool {
-        //
+        Self::is_indicator_zero(self.bytes[2], 5)
     }
 
     fn is_safe_to_copy(&self) -> bool {
