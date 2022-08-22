@@ -1,3 +1,60 @@
+use std::convert::TryFrom;
+use std::error::Error;
+use std::fmt;
+
+use crate::chunk_type::ChunkType;
+
+pub struct Chunk {
+    //
+}
+
+impl Chunk {
+    fn new(chunk_type: ChunkType, data: Vec<u8>) -> Chunk {
+        //
+    }
+
+    fn length(&self) -> u32 {
+        //
+    }
+
+    fn chunk_type(&self) -> &ChunkType {
+        //
+    }
+
+    fn data(&self) -> &[u8] {
+        //
+    }
+
+    fn crc(&self) -> u32 {
+        //
+    }
+
+    fn data_as_string(&self) -> crate::Result<String> {
+        //
+    }
+
+    fn as_bytes(&self) -> Vec<u8> {
+        //
+    }
+}
+
+impl TryFrom<&u8> for Chunk {
+    fn try_from(value: &u8) -> Result<Self, Self::Error> {
+        //
+    }
+}
+
+#[derive(Debug)]
+pub enum ChunkDecodingError {
+    //
+}
+
+impl Error for ChunkDecodingError {}
+
+impl fmt::Display for ChunkDecodingError {
+    //
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
