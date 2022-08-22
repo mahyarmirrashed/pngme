@@ -81,7 +81,9 @@ impl Chunk {
 }
 
 impl fmt::Display for Chunk {
-    //
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        //
+    }
 }
 
 impl TryFrom<&u8> for Chunk {
@@ -98,7 +100,9 @@ pub enum ChunkDecodingError {
 impl Error for ChunkDecodingError {}
 
 impl fmt::Display for ChunkDecodingError {
-    //
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        //
+    }
 }
 
 #[cfg(test)]
