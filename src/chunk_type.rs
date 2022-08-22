@@ -89,29 +89,6 @@ impl TryFrom<[u8; 4]> for ChunkType {
     }
 }
 
-/// ChunkTypeDecodingError is used while decoding a PNG chunk and an unexpected
-/// scenario arises.
-#[derive(Debug)]
-pub enum ChunkTypeDecodingError {
-    /// During decoding, an invalid byte was encountered. The byte encapsulated
-    /// is the first bad byte encountered.
-    BadByte(u8),
-    /// When attempting to cast from String to a ChunkType, there is a
-    /// possibility that the provided string may not be four bytes long.
-    BadLength(usize),
-}
-
-impl fmt::Display for ChunkTypeDecodingError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::BadByte(byte) => write!(f, "Bad byte: {byte} ({byte:b})"),
-            Self::BadLength(length) => write!(f, "Bad length: {length} (expected 4)"),
-        }
-    }
-}
-
-impl Error for ChunkTypeDecodingError {}
-
 impl FromStr for ChunkType {
     type Err = crate::Error;
 
@@ -144,6 +121,29 @@ impl fmt::Display for ChunkType {
         write!(f, "{}", res)?;
 
         Ok(())
+    }
+}
+
+/// ChunkTypeDecodingError is used while decoding a PNG chunk and an unexpected
+/// scenario arises.
+#[derive(Debug)]
+pub enum ChunkTypeDecodingError {
+    /// During decoding, an invalid byte was encountered. The byte encapsulated
+    /// is the first bad byte encountered.
+    BadByte(u8),
+    /// When attempting to cast from String to a ChunkType, there is a
+    /// possibility that the provided string may not be four bytes long.
+    BadLength(usize),
+}
+
+impl Error for ChunkTypeDecodingError {}
+
+impl fmt::Display for ChunkTypeDecodingError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::BadByte(byte) => write!(f, "Bad byte: {byte} ({byte:b})"),
+            Self::BadLength(length) => write!(f, "Bad length: {length} (expected 4)"),
+        }
     }
 }
 
