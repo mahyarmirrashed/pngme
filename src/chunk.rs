@@ -51,8 +51,9 @@ impl Chunk {
         &self.chunk_data
     }
 
+    /// The pre-calculated CRC (cyclic redundancy check) of the chunk.
     fn crc(&self) -> u32 {
-        //
+        self.crc
     }
 
     fn data_as_string(&self) -> crate::Result<String> {
