@@ -52,6 +52,12 @@ impl ChunkType {
     fn is_safe_to_copy(&self) -> bool {
         //
     }
+
+    /// Checks whether the nth bit on the right of the binary representation of
+    /// the byte is zero.
+    const fn is_indicator_zero(byte: u8, n: u8) -> bool {
+        (byte & (1 << n)) == 0
+    }
 }
 
 impl TryFrom<[u8; 4]> for ChunkType {
