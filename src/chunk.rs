@@ -5,7 +5,10 @@ use std::fmt;
 use crate::chunk_type::ChunkType;
 
 pub struct Chunk {
-    //
+    length: u32,
+    chunk_type: ChunkType,
+    chunk_data: Vec<u8>,
+    crc: u32,
 }
 
 impl Chunk {
