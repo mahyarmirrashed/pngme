@@ -114,6 +114,8 @@ pub enum ChunkDecodingError {
     BadLength(usize, usize),
     /// The provided chunk data is too large to fit into a single chunk.
     LongLength(usize),
+    /// The provided chunk data is too small to create a chunk from.
+    ShortLength(usize),
 }
 
 impl Error for ChunkDecodingError {}
@@ -129,6 +131,9 @@ impl fmt::Display for ChunkDecodingError {
             }
             Self::LongLength(len) => {
                 write!(f, "Bad chunk: Length too long ({len} >= 2^31)")
+            }
+            Self::ShortLength(len) => {
+                write!(f, "Bad chunk: Length too short ({len} < 8)")
             }
         }
     }
