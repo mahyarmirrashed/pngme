@@ -87,7 +87,12 @@ impl Chunk {
 
 impl fmt::Display for Chunk {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        //
+        write!(
+            f,
+            "{}\t{}",
+            self.chunk_type(),
+            self.data_as_string().unwrap_or("[data]".to_string())
+        )
     }
 }
 
