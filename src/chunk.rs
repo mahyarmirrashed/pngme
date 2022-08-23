@@ -4,6 +4,9 @@ use std::fmt;
 
 use crate::chunk_type::ChunkType;
 
+/// The PNG specification indicates that chunks cannot exceed 2^31 bytes.
+const MAXIMUM_LENGTH: u32 = 1 << 31;
+
 /// Each PNG chunk contains four parts: length, chunk type, chunk data, and a
 /// CRC (Cyclic Redundancy Check).
 #[derive(Debug)]
@@ -94,9 +97,16 @@ impl TryFrom<&u8> for Chunk {
     }
 }
 
+/// ChunkDecodingError is used while decoding a PNG chunk and an unexpected
+/// scenario arises.
 #[derive(Debug)]
 pub enum ChunkDecodingError {
-    //
+    /// The provided CRC did not match the calculated CRC.
+    BadCrc(u32),
+    /// The provided chunk data length did not match the calculated length.
+    BadLength(usize),
+    /// The provided chunk data is too large to fit into a single chunk.
+    LongLength(u32),
 }
 
 impl Error for ChunkDecodingError {}
