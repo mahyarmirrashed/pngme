@@ -106,14 +106,18 @@ pub enum ChunkDecodingError {
     /// The provided chunk data length did not match the calculated length.
     BadLength(usize),
     /// The provided chunk data is too large to fit into a single chunk.
-    LongLength(u32),
+    LongLength(usize),
 }
 
 impl Error for ChunkDecodingError {}
 
 impl fmt::Display for ChunkDecodingError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        //
+        match self {
+            Self::BadCrc(crc) => todo!(),
+            Self::BadLength(length) => todo!(),
+            Self::LongLength(length) => todo!(),
+        }
     }
 }
 
