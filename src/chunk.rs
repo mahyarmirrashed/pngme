@@ -102,9 +102,9 @@ impl TryFrom<&[u8]> for Chunk {
 #[derive(Debug)]
 pub enum ChunkDecodingError {
     /// The provided CRC did not match the calculated CRC.
-    BadCrc(u32),
+    BadCrc(u32, u32),
     /// The provided chunk data length did not match the calculated length.
-    BadLength(usize),
+    BadLength(usize, usize),
     /// The provided chunk data is too large to fit into a single chunk.
     LongLength(usize),
 }
