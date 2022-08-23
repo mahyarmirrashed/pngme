@@ -128,7 +128,7 @@ impl fmt::Display for ChunkType {
 /// unexpected scenario arises.
 #[derive(Debug)]
 pub enum ChunkTypeDecodingError {
-    /// During decoding, an invalid byte was encountered. The byte encapsulated
+    /// An invalid byte was encountered. The byte encapsulated
     /// is the first bad byte encountered.
     BadByte(u8),
     /// When attempting to cast from String to a ChunkType, there is a
