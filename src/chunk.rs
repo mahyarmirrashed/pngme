@@ -91,8 +91,8 @@ impl fmt::Display for Chunk {
     }
 }
 
-impl TryFrom<&u8> for Chunk {
-    fn try_from(value: &u8) -> Result<Self, Self::Error> {
+impl TryFrom<&[u8]> for Chunk {
+    fn try_from(value: &[u8]) -> Result<Self, Self::Error> {
         //
     }
 }
