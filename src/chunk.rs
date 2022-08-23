@@ -121,15 +121,15 @@ impl Error for ChunkDecodingError {}
 impl fmt::Display for ChunkDecodingError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::BadCrc(provided_crc, true_crc) => write!(
-                f,
-                "Bad chunk: Invalid CRC (received {provided_crc}, expected {true_crc})"
-            ),
-            Self::BadLength(provided_length, true_length) => write!(
-                f,
-                "Bad chunk: Invalid length (received {provided_length}, expected {true_length})"
-            ),
-            Self::LongLength(length) => write!(f, "Bad chunk: Length too long ({length} >= 2^31)"),
+            Self::BadCrc(crc, crc0) => {
+                write!(f, "Bad chunk: Invalid CRC ({crc}, expected {crc0})")
+            }
+            Self::BadLength(len, len0) => {
+                write!(f, "Bad chunk: Invalid length ({len}, expected {len0})")
+            }
+            Self::LongLength(len) => {
+                write!(f, "Bad chunk: Length too long ({len} >= 2^31)")
+            }
         }
     }
 }
