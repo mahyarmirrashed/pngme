@@ -92,6 +92,8 @@ impl fmt::Display for Chunk {
 }
 
 impl TryFrom<&[u8]> for Chunk {
+    type Error = crate::Error;
+
     fn try_from(value: &[u8]) -> Result<Self, Self::Error> {
         //
     }
