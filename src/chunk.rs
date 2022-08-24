@@ -66,6 +66,10 @@ impl Chunk {
         self.crc
     }
 
+    const fn calculate_crc(value: &[u8]) -> u32 {
+        crc::Crc::<u32>::new(&crc::CRC_32_CKSUM).checksum(value)
+    }
+
     /// Represent the embedded data within the chunk as a UTF-8 string. If an
     /// error occurs, wrap the error response in a Box object.
     fn data_as_string(&self) -> crate::Result<String> {
