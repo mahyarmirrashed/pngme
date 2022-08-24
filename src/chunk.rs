@@ -5,7 +5,7 @@ use std::fmt;
 use crate::chunk_type::ChunkType;
 
 /// The PNG specification indicates that chunks cannot exceed 2^31 bytes.
-const MAXIMUM_LENGTH: u32 = 1 << 31;
+const MAXIMUM_CHUNK_LENGTH: u32 = 1 << 31;
 
 /// Each PNG chunk contains four parts: length, chunk type, chunk data, and a
 /// CRC (Cyclic Redundancy Check).
@@ -116,11 +116,11 @@ pub enum ChunkDecodingError {
     /// The provided CRC did not match the calculated CRC.
     BadCrc(u32, u32),
     /// The provided chunk data length did not match the calculated length.
-    BadLength(usize, usize),
+    BadLength(u32, u32),
     /// The provided chunk data is too large to fit into a single chunk.
-    LongLength(usize),
+    LongLength(u32),
     /// The provided chunk data is too small to create a chunk from.
-    ShortLength(usize),
+    ShortLength(u32),
 }
 
 impl Error for ChunkDecodingError {}
@@ -128,17 +128,20 @@ impl Error for ChunkDecodingError {}
 impl fmt::Display for ChunkDecodingError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::BadCrc(crc, crc0) => {
-                write!(f, "Bad chunk: Invalid CRC ({crc}, expected {crc0})")
+            Self::BadCrc(provided_crc, true_crc) => {
+                write!(
+                    f,
+                    "Bad chunk: Invalid CRC (received {provided_crc}, expected {true_crc})"
+                )
             }
-            Self::BadLength(len, len0) => {
-                write!(f, "Bad chunk: Invalid length ({len}, expected {len0})")
+            Self::BadLength(provided_length, true_length) => {
+                write!(f, "Bad chunk: Invalid length (received {provided_length}, expected {true_length})")
             }
-            Self::LongLength(len) => {
-                write!(f, "Bad chunk: Length too long ({len} >= 2^31)")
+            Self::LongLength(length) => {
+                write!(f, "Bad chunk: Length too long ({length} >= 2^31)")
             }
-            Self::ShortLength(len) => {
-                write!(f, "Bad chunk: Length too short ({len} < 8)")
+            Self::ShortLength(length) => {
+                write!(f, "Bad chunk: Length too short ({length} < 8)")
             }
         }
     }
