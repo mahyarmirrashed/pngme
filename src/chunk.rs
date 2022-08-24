@@ -105,7 +105,46 @@ impl TryFrom<&[u8]> for Chunk {
     type Error = crate::Error;
 
     fn try_from(value: &[u8]) -> Result<Self, Self::Error> {
-        //
+        if value.len() < 8 {
+            return Err(Box::new(ChunkDecodingError::ShortLength(
+                value.len().try_into()?,
+            )));
+        }
+
+        let (length, chunk_metadata) = value.split_at(4);
+        let (chunk_metadata, crc) = chunk_metadata.split_at(chunk_metadata.len() - 4);
+        let (chunk_type, chunk_data) = chunk_metadata.split_at(4);
+
+        let provided_length: [u8; 4] = length.try_into()?;
+        let provided_length = u32::from_be_bytes(provided_length);
+        let calculated_length = chunk_data.len().try_into()?;
+
+        let provided_crc: [u8; 4] = crc.try_into()?;
+        let provided_crc = u32::from_be_bytes(provided_crc);
+        let calculated_crc = Chunk::calculate_crc(chunk_metadata);
+
+        let chunk_type: [u8; 4] = chunk_type.try_into()?;
+
+        if provided_length != calculated_length {
+            return Err(Box::new(ChunkDecodingError::BadLength(
+                provided_length,
+                calculated_length,
+            )));
+        } else if calculated_length >= MAXIMUM_CHUNK_LENGTH {
+            return Err(Box::new(ChunkDecodingError::LongLength(calculated_length)));
+        } else if provided_crc != calculated_crc {
+            return Err(Box::new(ChunkDecodingError::BadCrc(
+                provided_crc,
+                calculated_crc,
+            )));
+        }
+
+        Ok(Chunk {
+            length: provided_length,
+            chunk_type: ChunkType::try_from(chunk_type)?,
+            chunk_data: chunk_data.to_vec(),
+            crc: provided_crc,
+        })
     }
 }
 
